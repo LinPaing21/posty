@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <a href="/posts/create"><button>Create a Post...</button></a>
+        {{range .Posts }}
+        <article>
+            <h2>{{.Title}} <input type="button" class="margin-left: 2rem" id="{{.ID}}" onclick="handleDeletePost('{{.ID}}')" value="&times;"/></h2>
+            <time datetime="{{.CreatedAt}}">{{.CreatedAt}}</time>
+            <div>
+                {{.Content}}
+            </div>
+        </article>
+        {{end}}
+    </div>
+
+    <script defer>
+        const handleDeletePost = async (id) => {
+            console.log("Deleting Post...", parseInt(id))
+            await window.fetch("/posts/delete/"+ id, {
+                method: 'DELETE',
+            });
+
+            location.reload();
+        }
+    </script>
+</body>
+</html>
